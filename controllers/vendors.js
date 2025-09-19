@@ -10,6 +10,7 @@ const getCollection = () => {
   return database.collection(collectionName);
 };
 
+// CRUD operations get all vendors
 const getAll = async (req, res, next) => {
   try {
     const col = getCollection();
@@ -18,6 +19,7 @@ const getAll = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
+// Get vendor by id
 const getById = async (req, res, next) => {
   try {
     const col = getCollection();
@@ -27,6 +29,7 @@ const getById = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
+// Create new vendor
 const create = async (req, res, next) => {
   try {
     const col = getCollection();
@@ -39,19 +42,37 @@ const create = async (req, res, next) => {
   }
 };
 
+// Update vendor by id
 const update = async (req, res, next) => {
   try {
+    const id = req.params.id;
+    if (!ObjectId.isValid(id)) return res.status(400).json({ error: 'Invalid id' });
+
+    const updates = { ...(req.body || {}) };
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ error: 'At least one field is required to update' });
+    }
+
     const col = getCollection();
-    const result = await col.findOneAndUpdate(
-      { _id: new ObjectId(req.params.id) },
-      { $set: req.body },
-      { returnDocument: 'after' }
+
+    // perform update
+    const result = await col.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: updates }
     );
-    if (!result.value) return res.status(404).json({ error: 'Vendor not found' });
-    res.json(result.value);
-  } catch (err) { next(err); }
+
+    // if nothing matched, return 404
+    if (result.matchedCount === 0) return res.status(404).json({ error: 'Vendor not found' });
+
+    // fetch and return the updated document
+    const updated = await col.findOne({ _id: new ObjectId(id) });
+    res.json(updated);
+  } catch (err) {
+    next(err);
+  }
 };
 
+// Delete vendor by id
 const remove = async (req, res, next) => {
   try {
     const col = getCollection();

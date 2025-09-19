@@ -49,12 +49,13 @@ Content-Type: application/json
 }
 
 ### Update a vendor
-PUT http://localhost:8083/api/vendors/{{id}}
+PUT http://localhost:8083/api/vendors/68cddec810b589848b75e8f1
 Content-Type: application/json
 
 {
   "name": "Tessy Foods",
   "foodItem": "banana bread (1 slice)",
+  "price": 1000
 }
 
 ### Delete a vendor by id
