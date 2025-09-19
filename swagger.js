@@ -1,25 +1,26 @@
-// swagger.js — generates swagger.json with correct deployed URL (uses SWAGGER_HOST env var)
+// swagger.js — generate a Swagger 2.0 (OpenAPI 2.0) definition
 const swaggerAutogen = require('swagger-autogen')();
 
-const host = process.env.SWAGGER_HOST || 'localhost:8083';           
+const host = process.env.SWAGGER_HOST || 'localhost:8083';         // set to localfood.onrender.com on Render
 const scheme = process.env.SWAGGER_SCHEME || (host.includes('localhost') ? 'http' : 'https');
-const url = `${scheme}://${host}`;
 
 const doc = {
-  openapi: '3.0.0',
+  swagger: "2.0",
   info: {
     title: 'mypadifood API',
-    version: '1.0.0',
-    description: 'CRUD API for Week 03 (clients + vendors)'
+    description: 'CRUD API for Week 03 (clients + vendors)',
+    version: '1.0.0'
   },
-  servers: [
-    { url }   // e.g. "https://localfood.onrender.com"
-  ]
+  host,               // example: localfood.onrender.com
+  schemes: [scheme],  // example: ['https']
+  basePath: '/',      // root path
+  produces: ['application/json'],
+  consumes: ['application/json']
 };
 
 const outputFile = './swagger.json';
 const endpointsFiles = ['./routes/index.js'];
 
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-  console.log('swagger.json generated with server URL:', url);
+  console.log('swagger.json (Swagger 2.0) generated with host:', host);
 });
