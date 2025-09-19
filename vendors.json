@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Mama T's Kitchen",
+    "email": "mamat@gmail.com",
+    "foodItem": "Jollof Rice (Regular)",
+    "price": 1500,
+    "location": { "address": "12 Iweka Road, Onitsha", "lat": 6.1603, "lng": 6.7924 }
+  },
+  {
+    "name": "Oga Suya Spot",
+    "email": "ogasunya@yahoo.com",
+    "foodItem": "Beef Suya (Spicy)",
+    "price": 900,
+    "location": { "address": "45 Moshood St, Ikeja", "lat": 6.6018, "lng": 3.3515 }
+  },
+  {
+    "name": "Green Leaf Salads",
+    "email": "greenleaf@hotmail.com",
+    "foodItem": "Caesar Salad",
+    "price": 1200,
+    "location": { "address": "8 Victoria Ave, Lagos Island", "lat": 6.4551, "lng": 3.3942 }
+  }
+]

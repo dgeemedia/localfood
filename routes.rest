@@ -1,0 +1,61 @@
+### Get all clients
+GET http://localhost:8083/api/clients
+
+### Get client by id
+GET http://localhost:8083/api/clients/68cde002ce1d5e9b3e6a0125
+
+### Create a client
+POST http://localhost:8083/api/clients
+Content-Type: application/json
+
+{
+    "firstName": "Lucky",
+    "lastName": "Olumah",
+    "email": "georgeolumah@gmail.com",
+    "favoriteColor": "Green",
+    "birthday": "16/12/1990",
+    "phone": "08065104250",
+    "password": "pass1234",
+    "address": "12 Farm Road, Lagos"
+}
+
+
+
+### Update a client
+PUT http://localhost:8083/api/clients/{{id}}
+Content-Type: application/json
+
+{
+  "firstName": "Raphael",
+  "favoriteColor": "Green"
+}
+
+### Delete a client
+DELETE http://localhost:8083/api/clients/68cdda45e37cb8d24ca48c0e
+
+### Get all vendors
+GET http://localhost:8083/api/vendors
+
+### Create a vendor
+POST http://localhost:8083/api/vendors
+Content-Type: application/json
+
+{
+  "name": "Puff Puff House",
+  "email": "puffpuff@gmail.com",
+  "foodItem": "Puff Puff (6 pcs)",
+  "price": 300,
+  "location": { "address": "22 Market Road, Ibadan", "lat": 7.3775, "lng": 3.9470 }
+}
+
+### Update a vendor
+PUT http://localhost:8083/api/vendors/{{id}}
+Content-Type: application/json
+
+{
+  "name": "Tessy Foods",
+  "foodItem": "banana bread (1 slice)",
+}
+
+### Delete a vendor by id
+DELETE http://localhost:8083/api/vendors/{{id}}

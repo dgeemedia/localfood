@@ -1,0 +1,20 @@
+[
+  {
+    "firstName": "Lucky",
+    "lastName": "Olumah",
+    "email": "georgeolumah@gmail.com",
+    "favoriteColor": "Green",
+    "birthday": "16/12/1990",
+    "phone": "08065104250",
+    "address": "12 Farm Road, Lagos"
+  },
+  {
+    "firstName": "Elohor",
+    "lastName": "Olumah",
+    "email": "elohorolumah@gmail.com",
+    "favoriteColor": "Purple",
+    "birthday": "06/12/1995",
+    "phone": "08110203735",
+    "address": "Unit 5, Ikeja"
+  }
+]
