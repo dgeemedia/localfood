@@ -5,7 +5,7 @@
     "description": "CRUD API for Week 03 (clients + vendors)",
     "version": "1.0.0"
   },
-  "host": "https://localfood.onrender.com",
+  "host": "localfood.onrender.com",
   "basePath": "/",
   "schemes": [
     "https"
