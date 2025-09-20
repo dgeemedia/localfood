@@ -1,29 +1,30 @@
-// swagger.js — sanitize host (no scheme) and generate Swagger 2.0
+// swagger.js — generate OpenAPI 3.0 with both local and deployed servers
 const swaggerAutogen = require('swagger-autogen')();
 
-let host = process.env.SWAGGER_HOST || 'localhost:8083';
-const scheme = process.env.SWAGGER_SCHEME || (host.includes('localhost') ? 'http' : 'https');
+const localHost = process.env.SWAGGER_LOCAL || 'http://localhost:8083';
+const prodHost = process.env.SWAGGER_PROD || 'https://localfood.onrender.com';
 
-// if someone passed "https://localfood.onrender.com", strip protocol and slashes
-host = host.replace(/^https?:\/\//, '').replace(/\/+$/, '');
+// sanitize values (strip trailing slashes)
+const sanitize = (u) => u.replace(/\/+$/, '');
 
 const doc = {
-  swagger: "2.0",
+  openapi: '3.0.0',
   info: {
     title: 'mypadifood API',
-    description: 'CRUD API for Week 03 (clients + vendors)',
-    version: '1.0.0'
+    version: '1.0.0',
+    description: 'CRUD API for Week 03 (clients + vendors)'
   },
-  host,               // e.g. localfood.onrender.com
-  schemes: [scheme],  // e.g. ['https']
-  basePath: '/',
-  produces: ['application/json'],
-  consumes: ['application/json']
+  servers: [
+    { url: sanitize(localHost), description: 'Local development' },
+    { url: sanitize(prodHost), description: 'Render production' }
+  ],
+  paths: {}
 };
 
 const outputFile = './swagger.json';
 const endpointsFiles = ['./routes/index.js'];
 
+// generate swagger.json
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-  console.log('swagger.json (Swagger 2.0) generated with host:', host, 'scheme:', scheme);
+  console.log('swagger.json generated with servers:', sanitize(localHost), sanitize(prodHost));
 });
