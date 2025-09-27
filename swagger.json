@@ -3,7 +3,7 @@
   "info": {
     "title": "mypadifood API",
     "version": "1.0.0",
-    "description": "CRUD API for Week 03 (clients + vendors)"
+    "description": "CRUD API with GitHub OAuth (server-side flow), cookie sessions and JWT"
   },
   "servers": [
     {
@@ -12,10 +12,85 @@
     },
     {
       "url": "https://localfood.onrender.com",
-      "description": "Render production"
+      "description": "Production"
     }
   ],
   "paths": {
+    "/api/profile": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/start-oauth": {
+      "get": {
+        "description": "",
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/github": {
+      "get": {
+        "description": "",
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/github/callback": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "cookie",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/github/failure": {
+      "get": {
+        "description": "",
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/clients/": {
       "get": {
         "description": "",
@@ -27,17 +102,6 @@
       },
       "post": {
         "description": "",
-        "requestBody": {
-          "description": "Client object to create",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        },
         "responses": {
           "201": {
             "description": "Created"
@@ -59,13 +123,19 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "type": "string"
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "400": { "description": "Bad Request" },
-          "404": { "description": "Not Found" }
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
         }
       },
       "put": {
@@ -75,20 +145,19 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "type": "string"
           }
         ],
-        "requestBody": {
-          "description": "Fields to update for client",
-          "required": true,
-          "content": {
-            "application/json": { "schema": { "type": "object" } }
-          }
-        },
         "responses": {
-          "200": { "description": "OK" },
-          "400": { "description": "Bad Request" },
-          "404": { "description": "Not Found" }
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
         }
       },
       "delete": {
@@ -98,13 +167,19 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "type": "string"
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "400": { "description": "Bad Request" },
-          "404": { "description": "Not Found" }
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
         }
       }
     },
@@ -112,22 +187,23 @@
       "get": {
         "description": "",
         "responses": {
-          "200": { "description": "OK" }
+          "200": {
+            "description": "OK"
+          }
         }
       },
       "post": {
         "description": "",
-        "requestBody": {
-          "description": "Vendor object to create",
-          "required": true,
-          "content": {
-            "application/json": { "schema": { "type": "object" } }
-          }
-        },
         "responses": {
-          "201": { "description": "Created" },
-          "400": { "description": "Bad Request" },
-          "409": { "description": "Conflict" }
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Conflict"
+          }
         }
       }
     },
@@ -139,12 +215,16 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "type": "string"
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not Found" }
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
         }
       },
       "put": {
@@ -154,20 +234,19 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "type": "string"
           }
         ],
-        "requestBody": {
-          "description": "Fields to update for vendor",
-          "required": true,
-          "content": {
-            "application/json": { "schema": { "type": "object" } }
-          }
-        },
         "responses": {
-          "200": { "description": "OK" },
-          "400": { "description": "Bad Request" },
-          "404": { "description": "Not Found" }
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
         }
       },
       "delete": {
@@ -177,14 +256,55 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "type": "string"
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not Found" }
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
         }
       }
     }
-  }
+  },
+  "components": {
+    "securitySchemes": {
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "mypadifood.sid",
+        "description": "Session cookie set after successful login"
+      },
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Use the JWT returned from /auth/github/callback (via Swagger redirect)."
+      },
+      "githubOAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "http://localhost:8083/auth/start-oauth",
+            "tokenUrl": "https://github.com/login/oauth/access_token",
+            "scopes": {
+              "read:user": "Read basic user profile",
+              "user:email": "Read user email addresses"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    },
+    {
+      "cookieAuth": []
+    }
+  ]
 }
